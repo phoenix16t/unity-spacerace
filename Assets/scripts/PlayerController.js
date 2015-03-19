@@ -4,10 +4,8 @@ var health: float;
 var moveSpeed: float;
 var pos: float;
 var photonView: PhotonView;
-var nameText: UI.Text;
 
 function Start() {
-	Debug.Log("player" + nameText.text);
 	photonView = GetComponent(PhotonView);
 }
 

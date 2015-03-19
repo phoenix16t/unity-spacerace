@@ -22,5 +22,9 @@ function OnCreatedRoom() {
 }
 
 function OnJoinedRoom() {
-	PhotonNetwork.Instantiate("player", Vector3(0,0,0), Quaternion.identity, 0);
+//	var player = PhotonNetwork.Instantiate("player", Vector3(0,0,0), Quaternion.identity, 0);
+//	var playerName = PhotonNetwork.Instantiate("playerName", Vector3(0,0,0), Quaternion.identity, 0);
+//	Debug.Log("asldkfjslkdjflskdjfsldkfjsdlkfjsd" + playerName.GetComponent(ObjectLabel));
+//	playerName.GetComponent(ObjectLabel).target = player.transform;
+//	Debug.Log("asldkfjslkdjflskdjfsldkfjsdlkfjsd" + playerName.GetComponent(ObjectLabel).target);
 }
