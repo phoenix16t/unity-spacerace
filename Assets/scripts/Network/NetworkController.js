@@ -1,8 +1,11 @@
 ﻿#pragma strict
 
+var roomName = "space";
+private var VERSION = "v0.0.1";
+
 function Start() {
 	PhotonNetwork.logLevel = PhotonLogLevel.Full;
-	PhotonNetwork.ConnectUsingSettings("0.1");
+	PhotonNetwork.ConnectUsingSettings(VERSION);
 }
 
 function OnGUI() {
@@ -10,11 +13,15 @@ function OnGUI() {
 }
 
 function OnJoinedLobby() {
-	PhotonNetwork.JoinRandomRoom();
+//	PhotonNetwork.JoinRandomRoom();
+	var roomOptions: RoomOptions = new RoomOptions();
+	PhotonNetwork.JoinOrCreateRoom(roomName, roomOptions, TypedLobby.Default);
 }
 
 function OnPhotonRandomJoinFailed() {
-	PhotonNetwork.CreateRoom(null);
+//	PhotonNetwork.CreateRoom(null);
+	var roomOptions: RoomOptions = new RoomOptions();
+	PhotonNetwork.JoinOrCreateRoom(roomName, roomOptions, TypedLobby.Default);
 }
 
 function OnCreatedRoom() {
