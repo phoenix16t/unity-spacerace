@@ -102,6 +102,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   roomName: space
+  asteroidController: 0
 --- !u!4 &136203399
 Transform:
   m_ObjectHideFlags: 0
@@ -270,6 +271,8 @@ GameObject:
   - 65: {fileID: 869655632}
   - 23: {fileID: 869655631}
   - 114: {fileID: 869655635}
+  - 114: {fileID: 869655637}
+  - 114: {fileID: 869655636}
   m_Layer: 0
   m_Name: Asteroid spawner
   m_TagString: Untagged
@@ -334,7 +337,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 869655630}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 62fb46f38b52b4ee2b3f5bb394636d79, type: 3}
   m_Name: 
@@ -342,6 +345,46 @@ MonoBehaviour:
   asteroid: {fileID: 142348, guid: 4f4efd77ea8804004a00e91762dec0ff, type: 2}
   spawnRate: 2
   startTime: 3
+  spawner: 0
+--- !u!114 &869655636
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 869655630}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 821f49028066841e7afec25b2e384c6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  asteroid: {fileID: 0}
+  spawnRate: 2
+  startTime: 3
+--- !u!114 &869655637
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 869655630}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ownerId: 0
+  group: 0
+  prefixBackup: -1
+  observed: {fileID: 0}
+  synchronization: 3
+  onSerializeTransformOption: 3
+  onSerializeRigidBodyOption: 2
+  ownershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 869655636}
+  ObservedComponentsFoldoutOpen: 1
+  viewIdField: 2
+  instantiationId: 2
+  isRuntimeInstantiated: 0
 --- !u!1 &921260726
 GameObject:
   m_ObjectHideFlags: 0

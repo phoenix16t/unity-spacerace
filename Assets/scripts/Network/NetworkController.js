@@ -1,6 +1,7 @@
 ﻿#pragma strict
 
 var roomName = "space";
+var asteroidController: boolean = false;
 private var VERSION = "v0.0.1";
 private var spawnPoint: GameObject;
 
@@ -29,8 +30,13 @@ function OnPhotonRandomJoinFailed() {
 
 function OnCreatedRoom() {
 	Debug.Log("Room name: " + PhotonNetwork.room.name);
+	asteroidController = true;
 }
 
 function OnJoinedRoom() {
 	PhotonNetwork.Instantiate("player", spawnPoint.transform.position, spawnPoint.transform.rotation, 0);
+	
+	if(PhotonNetwork.isMasterClient) {
+		GameObject.FindWithTag("AsteroidSpawner").GetComponent.<NetworkAsteroidSpawner>().spawner = true;
+	}
 }

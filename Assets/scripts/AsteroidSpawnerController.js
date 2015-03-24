@@ -3,6 +3,7 @@
 var asteroid: GameObject;
 var spawnRate: float;
 var startTime: float;
+var spawner: boolean = false;
 private var nextSpawn: float;
 
 function Start () {
