@@ -36,7 +36,7 @@ function OnCreatedRoom() {
 function OnJoinedRoom() {
 	PhotonNetwork.Instantiate("player", spawnPoint.transform.position, spawnPoint.transform.rotation, 0);
 	
-	if(PhotonNetwork.isMasterClient) {
-		GameObject.FindWithTag("AsteroidSpawner").GetComponent.<NetworkAsteroidSpawner>().spawner = true;
-	}
+//	if(PhotonNetwork.isMasterClient) {
+//		GameObject.FindWithTag("AsteroidSpawner").GetComponent.<NetworkAsteroidSpawner>().spawner = true;
+//	}
 }

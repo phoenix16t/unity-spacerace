@@ -3,8 +3,8 @@
 var lerpSmoothing: float = 5;
 private var photonView: PhotonView;
 private var isAlive: boolean = true;
-private var opponentPosition: Vector3;
-private var opponentRotation: Quaternion;
+private var networkPosition: Vector3;
+private var networkRotation: Quaternion;
 
 function Start() {
 	photonView = GetComponent(PhotonView);
@@ -25,14 +25,14 @@ function OnPhotonSerializeView(stream: PhotonStream, info: PhotonMessageInfo) {
 		stream.SendNext(transform.rotation);
 	}
 	else {
-		opponentPosition = stream.ReceiveNext();
-		opponentRotation = stream.ReceiveNext();
+		networkPosition = stream.ReceiveNext();
+		networkRotation = stream.ReceiveNext();
 	}
 }
 
 function Update() {
 	if(isAlive) {
-		transform.position = Vector3.Lerp(transform.position, opponentPosition, Time.deltaTime * lerpSmoothing);
-		transform.rotation = Quaternion.Lerp(transform.rotation, opponentRotation, Time.deltaTime * lerpSmoothing);
+		transform.position = Vector3.Lerp(transform.position, networkPosition, Time.deltaTime * lerpSmoothing);
+		transform.rotation = Quaternion.Lerp(transform.rotation, networkRotation, Time.deltaTime * lerpSmoothing);
 	}
 }
