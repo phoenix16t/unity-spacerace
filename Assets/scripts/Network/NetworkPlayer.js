@@ -2,7 +2,7 @@
 
 var lerpSmoothing: float = 5;
 private var photonView: PhotonView;
-private var isAlive: boolean = true;
+private var IsNetworkPlayer: boolean = true;
 private var networkPosition: Vector3;
 private var networkRotation: Quaternion;
 
@@ -12,7 +12,7 @@ function Start() {
 	if(photonView.isMine) {
 		gameObject.name = "Me";
 		GetComponent(PlayerController).enabled = true;
-		isAlive = false;
+		IsNetworkPlayer = false;
 	}
 	else {
 		gameObject.name = "Network player";
@@ -31,7 +31,7 @@ function OnPhotonSerializeView(stream: PhotonStream, info: PhotonMessageInfo) {
 }
 
 function Update() {
-	if(isAlive) {
+	if(IsNetworkPlayer) {
 		transform.position = Vector3.Lerp(transform.position, networkPosition, Time.deltaTime * lerpSmoothing);
 		transform.rotation = Quaternion.Lerp(transform.rotation, networkRotation, Time.deltaTime * lerpSmoothing);
 	}

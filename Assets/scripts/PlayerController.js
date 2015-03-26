@@ -3,6 +3,7 @@
 var moveSpeed: float;
 var topBoundary: float;
 var bottomBoundary: float;
+var Explosion: GameObject;
 private var distance: float;
 private var isAlive: boolean = true;
 
@@ -28,5 +29,12 @@ function Update() {
 		// move ship
 		transform.position = Vector3.MoveTowards(transform.position, mousePos, moveSpeed);
 		transform.position.x = -7;
+	}
+}
+
+function OnTriggerEnter(other: Collider) {
+	if(other.tag == 'asteroid') {
+		Instantiate(Explosion, transform.position, Quaternion.identity);
+		Destroy(gameObject);
 	}
 }

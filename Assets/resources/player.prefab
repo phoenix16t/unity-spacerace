@@ -28,7 +28,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 195994}
   m_LocalRotation: {x: 0, y: .707106829, z: 0, w: .707106709}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -125,6 +125,7 @@ MonoBehaviour:
   moveSpeed: .300000012
   topBoundary: 560
   bottomBoundary: 40
+  Explosion: {fileID: 175806, guid: a24f3913ade894ff683d42e2c210b638, type: 2}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
