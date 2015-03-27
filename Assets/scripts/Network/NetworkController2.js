@@ -1,63 +1,104 @@
 ﻿#pragma strict
 
 var roomName = "space";
-var roomList: RoomInfo[];
+private var roomList: RoomInfo[];
 private var VERSION = "v0.0.1";
 private var gameReady: boolean = false;
 private var spawnPoint: GameObject;
 private var status: UI.Text;
 private var joinGame: boolean = false;
-private var joinButton: UI.Button;
+private var joinButton: GameObject;
+private var cancelButton: GameObject;
 private var startButton: GameObject;
+private var nameField: UI.InputField;
+private var photonView: PhotonView;
 
+/*
 function Start() {
+	photonView = GetComponent(PhotonView);
 	PhotonNetwork.logLevel = PhotonLogLevel.Full;
 	PhotonNetwork.ConnectUsingSettings(VERSION);
 	status = GameObject.Find("Status").GetComponent(UI.Text);
-	joinButton = GameObject.Find("JoinButton").GetComponent(UI.Button);
+	joinButton = GameObject.Find("JoinButton");
+	cancelButton = GameObject.Find("CancelButton");
+	cancelButton.SetActive(false);
 	startButton = GameObject.Find("StartButton");
-	Debug.Log("start" + startButton + "sldfkj" + joinButton);
+	startButton.SetActive(false);
+	nameField = GameObject.Find("InputField").GetComponent.<UI.InputField>();
+	
+//	GameReady();
 }
 
 function OnGUI() {
 	GUILayout.Label(PhotonNetwork.connectionStateDetailed.ToString());
 }
+*/
+/*
+function OnPhotonSerializeView(stream: PhotonStream, info: PhotonMessageInfo) {
+	if(stream.isWriting == true) {
+		stream.SendNext(joinGame);
+	}
+	else {
+		Debug.Log("joined " + stream.ReceiveNext());	
+	}
+}
 
 function OnReceivedRoomListUpdate() {
 	roomList = PhotonNetwork.GetRoomList();
-	Debug.Log("list " + roomList.length);
 
 	if(roomList.length == 0) {
-		status.text = "Ready to play";
-//		joinGame = true;
-		joinButton.interactable = true;
+		GameReady();
+	}
+	else if(roomList.length != 0) {
+		GameInProgress();
+	}
+}
+
+function GameInProgress() {
+	if(roomList.length == 0) {
+		GameReady();
 	}
 	else {
 		status.text = "Game in session. Please wait...";
-//		joinGame = false;
-		joinButton.interactable = false;
+		joinButton.GetComponent(UI.Button).interactable = false;
+		
+		joinButton.SetActive(true);
+		cancelButton.SetActive(false);
+		startButton.SetActive(false);
 	}
+}
 
+function GameReady() {
+	joinGame = false;
+	nameField.enabled = true;
 
-//	var playerList = PhotonNetwork.playerList;
-//	Debug.Log("roomlist " + roomList[0].name);
-	// Debug.Log("roomlist2 " + roomList.length);
-	
-	// if(roomList.length == 0) {
-	// 	gameReady = true;
-	// }
-	// else {
-	// 	gameReady = false;
-	// }
+	if(roomList && roomList.length != 0) {
+		GameInProgress();
+	}
+	else {
+		status.text = "Ready to play";
+		joinButton.GetComponent(UI.Button).interactable = true;
+		
+		joinButton.SetActive(true);
+		cancelButton.SetActive(false);
+		startButton.SetActive(false);
+	}
 }
 
 function StartGame() {
-	status.text = "Joined. Click Start or Cancel";
-	startButton.SetActive(true);
+	if(!nameField.text) {
+		GameReady();
+	}
+	else {
+		nameField.enabled = false;
+		status.text = "Joined. Click Start or Cancel";
+		joinButton.SetActive(false);
+		cancelButton.SetActive(true);
+		startButton.SetActive(true);
+		
+		joinGame = true;
+		
+//		Debug.Log("player " + PhotonNetwork.playerList[0] + " name " + nameField.text);
+	}
 }
-
-//function Update() {
-//	if(joinGame) {
-//		
-//	}
-//}
+*/
