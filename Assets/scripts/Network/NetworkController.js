@@ -1,8 +1,8 @@
 ﻿#pragma strict
 
 var roomName = "space";
-var roomName2 = "space2";
 private var VERSION = "v0.0.1";
+private var gameReady: boolean = false;
 private var spawnPoint: GameObject;
 
 function Start() {
@@ -26,7 +26,7 @@ function OnJoinedLobby() {
 //	PhotonNetwork.JoinRoom(roomName);
 
 
-	var roomList = PhotonNetwork.GetRoomList();
+//	var roomList = PhotonNetwork.GetRoomList();
 //	var playerList = PhotonNetwork.playerList;
 //	Debug.Log("roomlist " + roomList[0].name);
 //	Debug.Log("playerlist " + playerList);
@@ -34,11 +34,17 @@ function OnJoinedLobby() {
 }
 
 function OnReceivedRoomListUpdate() {
-	Debug.Log("lskdjfsldjfsdlkfjsdlkfjsdlfkjsdlfkj");
-	
 	var roomList = PhotonNetwork.GetRoomList();
 //	var playerList = PhotonNetwork.playerList;
-	Debug.Log("roomlist " + roomList[0].name);
+//	Debug.Log("roomlist " + roomList[0].name);
+	Debug.Log("roomlist2 " + roomList.length);
+	
+	if(roomList.length == 0) {
+		gameReady = true;
+	}
+	else {
+		gameReady = false;
+	}
 }
 
 function OnCreatedRoom() {
@@ -71,4 +77,13 @@ function OnCreatedRoom() {
 
 function OnJoinedRoom() {
 	PhotonNetwork.Instantiate("player", spawnPoint.transform.position, spawnPoint.transform.rotation, 0);
+}
+
+function Update() {
+	if(gameReady) {
+		Debug.Log("ready");
+	}
+	else {
+		Debug.Log("no");
+	}
 }
