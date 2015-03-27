@@ -8,12 +8,15 @@ private var spawnPoint: GameObject;
 private var status: UI.Text;
 private var joinGame: boolean = false;
 private var joinButton: UI.Button;
+private var startButton: GameObject;
 
 function Start() {
 	PhotonNetwork.logLevel = PhotonLogLevel.Full;
 	PhotonNetwork.ConnectUsingSettings(VERSION);
 	status = GameObject.Find("Status").GetComponent(UI.Text);
 	joinButton = GameObject.Find("JoinButton").GetComponent(UI.Button);
+	startButton = GameObject.Find("StartButton");
+	Debug.Log("start" + startButton + "sldfkj" + joinButton);
 }
 
 function OnGUI() {
@@ -26,12 +29,12 @@ function OnReceivedRoomListUpdate() {
 
 	if(roomList.length == 0) {
 		status.text = "Ready to play";
-		joinGame = true;
+//		joinGame = true;
 		joinButton.interactable = true;
 	}
 	else {
 		status.text = "Game in session. Please wait...";
-		joinGame = false;
+//		joinGame = false;
 		joinButton.interactable = false;
 	}
 
@@ -47,3 +50,14 @@ function OnReceivedRoomListUpdate() {
 	// 	gameReady = false;
 	// }
 }
+
+function StartGame() {
+	status.text = "Joined. Click Start or Cancel";
+	startButton.SetActive(true);
+}
+
+//function Update() {
+//	if(joinGame) {
+//		
+//	}
+//}
