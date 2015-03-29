@@ -9,9 +9,13 @@ var roomListComplete: boolean = false;
 private var roomName: String;
 private var namez: String;
 
+private var spawnPoint: GameObject;
+
 function Start() {
 	PhotonNetwork.logLevel = PhotonLogLevel.Full;
 	PhotonNetwork.ConnectUsingSettings(VERSION);
+
+	spawnPoint = GameObject.FindWithTag("Respawn");
 }
 
 function OnGUI() {
@@ -39,9 +43,17 @@ function OnJoinedRoom() {
 	// var list = PhotonNetwork.GetRoomList();
 	// Debug.Log("rooms " + list.length);
 
-	
+Debug.Log("calling");
+	PhotonNetwork.LoadLevel("level1");
 }
 
+function OnLevelWasLoaded() {
+Debug.Log("Arrived");
+
+	// PhotonNetwork.Instantiate("player", spawnPoint.transform.position, spawnPoint.transform.rotation, 0);
+
+	PhotonNetwork.Instantiate("player", Vector3.zero, Quaternion.identity, 0);
+}
 
 /*
 function OnPhotonSerializeView(stream: PhotonStream, info: PhotonMessageInfo) {

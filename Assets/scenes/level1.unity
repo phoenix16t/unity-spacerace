@@ -83,6 +83,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 136203399}
   - 114: {fileID: 136203398}
+  - 114: {fileID: 136203400}
   m_Layer: 0
   m_Name: Network
   m_TagString: Untagged
@@ -96,13 +97,12 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 136203397}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8e4fbce8f32344f8f8fbc989a8c1dce4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   roomName: space
-  roomName2: space2
 --- !u!4 &136203399
 Transform:
   m_ObjectHideFlags: 0
@@ -115,6 +115,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
+--- !u!114 &136203400
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 136203397}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a1e15644c4c343d8b89d819b1218ffa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  roomNameOld: space
+  inLobby: 0
+  roomListComplete: 0
 --- !u!1 &159586726
 GameObject:
   m_ObjectHideFlags: 0
