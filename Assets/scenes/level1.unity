@@ -102,7 +102,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   roomName: space
-  roomName2: space2
 --- !u!4 &136203399
 Transform:
   m_ObjectHideFlags: 0
