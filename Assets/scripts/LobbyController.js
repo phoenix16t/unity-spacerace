@@ -37,11 +37,11 @@ function Update() {
   else if(ns.inLobby && ns.roomListComplete) {
     if(ns.roomList.length == 0) {
       status.text = "Logged in. No rooms found";
-      joinButton.interactable = false;
+      // joinButton.interactable = false;
     }
     else {
       status.text = "Logged in";
-      joinButton.interactable = true;
+      // joinButton.interactable = true;
       roomListing.text = "\n";
 
       for(var room in ns.roomList) {
