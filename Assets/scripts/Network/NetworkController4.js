@@ -32,7 +32,8 @@ function OnReceivedRoomListUpdate() {
 
 function CreateNewRoom() {
 	roomName = GameObject.Find("NewGameName").GetComponent.<UI.Text>().text;
-	PhotonNetwork.CreateRoom(roomName);
+	var roomOptions: RoomOptions = new RoomOptions();
+	PhotonNetwork.JoinOrCreateRoom(roomName, roomOptions, TypedLobby.Default);
 }
 
 function OnJoinedRoom() {
