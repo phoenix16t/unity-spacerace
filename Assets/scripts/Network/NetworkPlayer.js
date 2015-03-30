@@ -36,3 +36,8 @@ function Update() {
 		transform.rotation = Quaternion.Lerp(transform.rotation, networkRotation, Time.deltaTime * lerpSmoothing);
 	}
 }
+
+function LeaveRoom() {
+	PhotonNetwork.LeaveRoom();
+	PhotonNetwork.LoadLevel("lobby");
+}

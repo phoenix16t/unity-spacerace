@@ -10,6 +10,7 @@ private var roomName: String;
 private var namez: String;
 
 private var spawnPoint: GameObject;
+private var playerName: String;
 
 function Start() {
 	DontDestroyOnLoad(transform.gameObject);
@@ -31,6 +32,7 @@ function OnReceivedRoomListUpdate() {
 }
 
 function CreateNewRoom() {
+	playerName = GameObject.Find("PlayerName").transform.Find("Text").GetComponent.<UI.Text>().text;
 	roomName = GameObject.Find("NewGameName").GetComponent.<UI.Text>().text;
 	var roomOptions: RoomOptions = new RoomOptions();
 	PhotonNetwork.JoinOrCreateRoom(roomName, roomOptions, TypedLobby.Default);
@@ -42,6 +44,6 @@ function OnJoinedRoom() {
 
 function OnLevelWasLoaded() {
 	spawnPoint = GameObject.FindWithTag("Respawn");
-
-	PhotonNetwork.Instantiate("player", spawnPoint.transform.position, spawnPoint.transform.rotation, 0);
+	var player = PhotonNetwork.Instantiate("player", spawnPoint.transform.position, spawnPoint.transform.rotation, 0);
+	player.transform.Find("playerName").GetComponent.<TextMesh>().text = playerName;
 }
