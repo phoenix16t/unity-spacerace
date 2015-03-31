@@ -3,7 +3,7 @@
 var asteroids: GameObject[];
 var spawnRate: float;
 var startTime: float;
-var spawner: boolean = false;
+// var spawner: boolean = false;
 private var nextSpawn: float;
 private var photonView: PhotonView;
 private var oldPos: Vector3;
@@ -16,37 +16,58 @@ function Start () {
 	nextSpawn = Time.time + startTime;
 }
 
-function OnPhotonSerializeView(stream: PhotonStream, info: PhotonMessageInfo) {
-	if(spawner && stream.isWriting == true) {
-		stream.SendNext(position);
-		stream.SendNext(rotation);
-		stream.SendNext(choice);
-	}
-	else {
-		position = stream.ReceiveNext();
-		rotation = stream.ReceiveNext();
-		choice = stream.ReceiveNext();
-	}
-}
+// function OnPhotonSerializeView(stream: PhotonStream, info: PhotonMessageInfo) {
+// 	if(spawner && stream.isWriting == true) {
+// 		stream.SendNext(position);
+// 		stream.SendNext(rotation);
+// 		stream.SendNext(choice);
+// 	}
+// 	else {
+// 		position = stream.ReceiveNext();
+// 		rotation = stream.ReceiveNext();
+// 		choice = stream.ReceiveNext();
+// 	}
+// }
 
 function Update () {
-	if(PhotonNetwork.isMasterClient) {
-		spawner = true;
-	}
-
-	if(spawner && photonView.isMine && Time.time > nextSpawn) {
+	if(PhotonNetwork.isMasterClient && photonView.isMine && Time.time > nextSpawn) {
 		nextSpawn = Time.time + spawnRate;
 		position = new Vector3(transform.position.x, Random.Range(-5f, 5f), transform.position.z);
 		rotation = Random.insideUnitSphere;
 		choice = Random.Range(0, asteroids.length);
-	}
-	else {
-		if(position != oldPos) {			
-			var insAsteroid = Instantiate(asteroids[choice], position, Quaternion.identity);
-			insAsteroid.gameObject.rigidbody.AddForce(transform.right * -100);
-			insAsteroid.gameObject.rigidbody.AddTorque(rotation * 100);
 
-			oldPos = position;
+		var insAsteroid: GameObject;
+
+		if(choice == 0) {
+			insAsteroid = PhotonNetwork.Instantiate("asteroid1", position, Quaternion.identity, 0);
 		}
+		else if(choice == 1) {
+			insAsteroid = PhotonNetwork.Instantiate("asteroid2", position, Quaternion.identity, 0);			
+		}
+
+		insAsteroid.rigidbody.AddForce(transform.right * -100);
+		insAsteroid.rigidbody.AddTorque(rotation * 100);
 	}
 }
+
+// function Update () {
+// 	if(PhotonNetwork.isMasterClient) {
+// 		spawner = true;
+// 	}
+
+// 	if(spawner && photonView.isMine && Time.time > nextSpawn) {
+// 		nextSpawn = Time.time + spawnRate;
+// 		position = new Vector3(transform.position.x, Random.Range(-5f, 5f), transform.position.z);
+// 		rotation = Random.insideUnitSphere;
+// 		choice = Random.Range(0, asteroids.length);
+// 	}
+// 	else {
+// 		if(position != oldPos) {			
+// 			var insAsteroid = Instantiate(asteroids[choice], position, Quaternion.identity);
+// 			insAsteroid.gameObject.rigidbody.AddForce(transform.right * -100);
+// 			insAsteroid.gameObject.rigidbody.AddTorque(rotation * 100);
+
+// 			oldPos = position;
+// 		}
+// 	}
+// }

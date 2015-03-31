@@ -1,6 +1,6 @@
 ﻿#pragma strict
 
-var lerpSmoothing: float = 5;
+var lerpSmoothing: float = 5f;
 private var photonView: PhotonView;
 private var IsNetworkPlayer: boolean = true;
 private var networkPosition: Vector3;
@@ -35,9 +35,4 @@ function Update() {
 		transform.position = Vector3.Lerp(transform.position, networkPosition, Time.deltaTime * lerpSmoothing);
 		transform.rotation = Quaternion.Lerp(transform.rotation, networkRotation, Time.deltaTime * lerpSmoothing);
 	}
-}
-
-function LeaveRoom() {
-	PhotonNetwork.LeaveRoom();
-	PhotonNetwork.LoadLevel("lobby");
 }
