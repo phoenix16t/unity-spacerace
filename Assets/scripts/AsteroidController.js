@@ -7,10 +7,6 @@ private var rotation: Quaternion;
 
 function Start() {
 	photonView = GetComponent(PhotonView);
-
-	if(photonView.isMine) {
-		gameObject.name = "as";
-	}
 }
 
 function OnPhotonSerializeView(stream: PhotonStream, info: PhotonMessageInfo) {
@@ -32,9 +28,11 @@ function OnTriggerEnter(other: Collider) {
 
 function Update() {
 	if(!photonView.isMine) {
-Debug.Log("position " + position);
-// Debug.Log("position2 " + transform.position);
 		transform.position = Vector3.Lerp(transform.position, position, Time.deltaTime * lerpSmoothing);
 		transform.rotation = Quaternion.Lerp(transform.rotation, rotation, Time.deltaTime * lerpSmoothing);
+
+		if(transform.position == position) {
+			Destroy(gameObject);
+		}
 	}
 }
