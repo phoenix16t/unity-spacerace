@@ -3,7 +3,6 @@
 var asteroids: GameObject[];
 var spawnRate: float;
 var startTime: float;
-var spawner: boolean = false;
 private var nextSpawn: float;
 private var photonView: PhotonView;
 private var oldPos: Vector3;
@@ -17,7 +16,7 @@ function Start () {
 }
 
 function OnPhotonSerializeView(stream: PhotonStream, info: PhotonMessageInfo) {
-	if(spawner && stream.isWriting == true) {
+	if(PhotonNetwork.isMasterClient && stream.isWriting == true) {
 		stream.SendNext(position);
 		stream.SendNext(rotation);
 		stream.SendNext(choice);
@@ -30,11 +29,7 @@ function OnPhotonSerializeView(stream: PhotonStream, info: PhotonMessageInfo) {
 }
 
 function Update () {
-	if(PhotonNetwork.isMasterClient) {
-		spawner = true;
-	}
-
-	if(spawner && photonView.isMine && Time.time > nextSpawn) {
+	if(PhotonNetwork.isMasterClient && photonView.isMine && Time.time > nextSpawn) {
 		nextSpawn = Time.time + spawnRate;
 		position = new Vector3(transform.position.x, Random.Range(-5f, 5f), transform.position.z);
 		rotation = Random.insideUnitSphere;
