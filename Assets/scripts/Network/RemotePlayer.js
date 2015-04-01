@@ -1,6 +1,7 @@
 ﻿#pragma strict
 
 var lerpSmoothing: float = 5f;
+var Explosion: GameObject;
 private var invincibleTime: float = 5f;
 private var photonView: PhotonView;
 private var networkPosition: Vector3;
@@ -39,6 +40,8 @@ function Update() {
 
 function OnTriggerEnter(other: Collider) {
 	if(other.tag == 'asteroid' && photonView.isMine && Time.time > invincibleTime) {
+		PhotonNetwork.Instantiate("Explosion", transform.position, Quaternion.identity, 0);
 		PhotonNetwork.Destroy(this.gameObject);
+		// Instantiate(Explosion, transform.position, Quaternion.identity);
 	}
 }

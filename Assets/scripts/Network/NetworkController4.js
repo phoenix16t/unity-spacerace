@@ -6,16 +6,24 @@ private var VERSION = "v0.0.1";
 
 var inLobby: boolean = false;
 var roomListComplete: boolean = false;
-private var roomName: String;
-private var namez: String;
 
+static var exists: boolean = false;
+
+private var roomName: String;
 private var spawnPoint: GameObject;
 private var playerName: String;
 
 function Start() {
-	DontDestroyOnLoad(transform.gameObject);
-	PhotonNetwork.logLevel = PhotonLogLevel.Full;
-	PhotonNetwork.ConnectUsingSettings(VERSION);
+	if(exists) {
+		Destroy(gameObject);
+	}
+	else {
+		exists = true;
+
+		DontDestroyOnLoad(gameObject);
+		PhotonNetwork.logLevel = PhotonLogLevel.Full;
+		PhotonNetwork.ConnectUsingSettings(VERSION);
+	}
 }
 
 function OnGUI() {
@@ -31,24 +39,27 @@ function OnReceivedRoomListUpdate() {
 	roomListComplete = true;
 }
 
-function CreateNewRoom() {
-	playerName = GameObject.Find("PlayerName").transform.Find("Text").GetComponent.<UI.Text>().text;
-	roomName = GameObject.Find("NewGameName").GetComponent.<UI.Text>().text;
-	var roomOptions: RoomOptions = new RoomOptions();
-	PhotonNetwork.JoinOrCreateRoom(roomName, roomOptions, TypedLobby.Default);
-}
+// function CreateNewRoom() {
+// 	Debug.Log("trying to connect");
+// 	playerName = GameObject.Find("PlayerName").transform.Find("Text").GetComponent.<UI.Text>().text;
+// 	roomName = GameObject.Find("NewGameName").GetComponent.<UI.Text>().text;
+// 	var roomOptions: RoomOptions = new RoomOptions();
+// 	PhotonNetwork.JoinOrCreateRoom(roomName, roomOptions, TypedLobby.Default);
+// }
 
 function OnJoinedRoom() {
+	inLobby = false;
 	PhotonNetwork.LoadLevel("level1");
 }
 
 function OnLevelWasLoaded() {
-	spawnPoint = GameObject.FindWithTag("Respawn");
-	var player = PhotonNetwork.Instantiate("player", spawnPoint.transform.position, spawnPoint.transform.rotation, 0);
-	player.transform.Find("playerName").GetComponent.<TextMesh>().text = playerName;
+	if(PhotonNetwork.room) {
+		spawnPoint = GameObject.FindWithTag("Respawn");
+		var player = PhotonNetwork.Instantiate("player", spawnPoint.transform.position, spawnPoint.transform.rotation, 0);
+		player.transform.Find("playerName").GetComponent.<TextMesh>().text = playerName;
+	}
 }
 
 function OnLeftRoom() {
-	Debug.Log("lobby sladkfjlsadkjflsak;fjlsa;kfj lsakfj sadlkfj");
 	PhotonNetwork.LoadLevel("lobby");
 }

@@ -158,7 +158,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lerpSmoothing: 5
   Explosion: {fileID: 175806, guid: a24f3913ade894ff683d42e2c210b638, type: 2}
-  isAlive: 1
 --- !u!114 &11495990
 MonoBehaviour:
   m_ObjectHideFlags: 1

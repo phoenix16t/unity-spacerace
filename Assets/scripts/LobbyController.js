@@ -50,3 +50,10 @@ function Update() {
     }
   }
 }
+
+function CreateNewRoom() {
+  var playerName = GameObject.Find("PlayerName").transform.Find("Text").GetComponent.<UI.Text>().text;
+  var roomName = GameObject.Find("NewGameName").GetComponent.<UI.Text>().text;
+  var roomOptions: RoomOptions = new RoomOptions();
+  PhotonNetwork.JoinOrCreateRoom(roomName, roomOptions, TypedLobby.Default);
+}

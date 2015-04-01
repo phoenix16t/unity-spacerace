@@ -30,5 +30,6 @@ function Update() {
 }
 
 function OnDestroy() {
-	Instantiate(Explosion, transform.position, Quaternion.identity);
+	// Debug.Log("wtf?");
+	// Instantiate(Explosion, transform.position, Quaternion.identity);
 }
