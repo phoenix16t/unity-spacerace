@@ -47,3 +47,8 @@ function OnLevelWasLoaded() {
 	var player = PhotonNetwork.Instantiate("player", spawnPoint.transform.position, spawnPoint.transform.rotation, 0);
 	player.transform.Find("playerName").GetComponent.<TextMesh>().text = playerName;
 }
+
+function OnLeftRoom() {
+	Debug.Log("lobby sladkfjlsadkjflsak;fjlsa;kfj lsakfj sadlkfj");
+	PhotonNetwork.LoadLevel("lobby");
+}
