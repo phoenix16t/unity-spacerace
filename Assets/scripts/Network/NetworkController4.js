@@ -53,6 +53,7 @@ function OnJoinedRoom() {
 }
 
 function OnLevelWasLoaded() {
+	Debug.Log("blahblahblahblahblahblah");
 	if(PhotonNetwork.room) {
 		spawnPoint = GameObject.FindWithTag("Respawn");
 		var player = PhotonNetwork.Instantiate("player", spawnPoint.transform.position, spawnPoint.transform.rotation, 0);
