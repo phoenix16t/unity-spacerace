@@ -2,6 +2,7 @@
 
 private var VERSION = "v0.0.1";
 private var roomName: String;
+private var roomList: RoomInfo[];
 private var scrollPos: Vector2 = Vector2.zero;
 
 function Start() {
@@ -18,6 +19,8 @@ function OnGUI() {
 		return;
 	}
 	else if(PhotonNetwork.room) { return; }
+
+	roomList = PhotonNetwork.GetRoomList();
 
 	GUILayout.BeginArea(new Rect(300, 0, 300, 600));
 		// Title
@@ -38,13 +41,6 @@ function OnGUI() {
 			}
 		GUILayout.EndHorizontal();
 
-		// Join room
-		// GUILayout.BeginHorizontal();
-		// 	GUILayout.Label("Join room:", GUILayout.Width(75));
-		// 	roomName = GUILayout.TextField(roomName, GUILayout.Width(180));
-		// 	GUILayout.Button("Go");
-		// GUILayout.EndHorizontal();
-
 		// Create Room
 		GUILayout.BeginHorizontal();
 			GUILayout.Label("Create room:", GUILayout.Width(75));
@@ -57,40 +53,34 @@ function OnGUI() {
 			}
 		GUILayout.EndHorizontal();
 
-		// Join random room
-		// GUILayout.BeginHorizontal();
-		// 	GUILayout.Label("Join random: ", GUILayout.Width(75));
-		// 	if(PhotonNetwork.GetRoomList().Length == 0) {
-		// 		GUILayout.Label("No games available");
-		// 	}
-		// 	else {
-		// 		GUILayout.Button("Go");
-		// 	}
-		// GUILayout.EndHorizontal();
-
 		GUILayout.Space(30);
 
 		// Choose room
 		GUILayout.BeginHorizontal();
 			GUILayout.Label("Join room:", GUILayout.Width(75));
 			GUILayout.FlexibleSpace();
-			GUILayout.Button("Random", GUILayout.Width(60));
+			if(roomList.Length > 0) {
+				if(GUILayout.Button("Random", GUILayout.Width(100))) {
+					PhotonNetwork.JoinRandomRoom();
+				}
+			}
 		GUILayout.EndHorizontal();
 
 		scrollPos = GUILayout.BeginScrollView(scrollPos, GUILayout.Height(180), GUILayout.Width(300));
-		if(PhotonNetwork.GetRoomList().Length == 0) {
+		if(roomList.Length == 0) {
 			GUILayout.Label("No games available");
 		}
 		else {
-
-			for(var game: RoomInfo in PhotonNetwork.GetRoomList()) {
+			for(var game: RoomInfo in roomList) {
 				GUILayout.BeginHorizontal();
-					GUILayout.Label(game.name + " " + game.playerCount + "/" + game.maxPlayers);
-					GUILayout.Button("Join", GUILayout.Width(50));
+					GUILayout.Label(game.name + " - " + game.playerCount + "/" + game.maxPlayers);
+					if(GUILayout.Button("Join", GUILayout.Width(50))) {
+						PhotonNetwork.JoinRoom(game.name);
+					}
 				GUILayout.EndHorizontal();
 			}
-			GUILayout.EndScrollView();
 		}
+		GUILayout.EndScrollView();
 
 	GUILayout.EndArea();
 }
