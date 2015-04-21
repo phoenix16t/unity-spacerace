@@ -2,6 +2,7 @@
 
 private var VERSION = "v0.0.1";
 private var roomName: String;
+private var scrollPos: Vector2 = Vector2.zero;
 
 function Start() {
 	PhotonNetwork.logLevel = PhotonLogLevel.Full;
@@ -29,7 +30,8 @@ function OnGUI() {
 		// Name
 		GUILayout.BeginHorizontal();
 			GUILayout.Label("Name:", GUILayout.Width(75));
-			var newName = GUILayout.TextField(PhotonNetwork.playerName, GUILayout.Width(180));
+			GUILayout.FlexibleSpace();
+			var newName = GUILayout.TextField(PhotonNetwork.playerName, GUILayout.Width(205));
 			if(newName != PhotonNetwork.playerName) {
 				PhotonNetwork.playerName = newName;
 				PlayerPrefs.SetString("playerName", PhotonNetwork.playerName);
@@ -46,8 +48,9 @@ function OnGUI() {
 		// Create Room
 		GUILayout.BeginHorizontal();
 			GUILayout.Label("Create room:", GUILayout.Width(75));
-			roomName = GUILayout.TextField(roomName, GUILayout.Width(180));
-			if(GUILayout.Button("Go")) {
+			GUILayout.FlexibleSpace();
+			roomName = GUILayout.TextField(roomName, GUILayout.Width(150));
+			if(GUILayout.Button("Go", GUILayout.Width(50))) {
 				var roomOptions = new RoomOptions();
 				roomOptions.maxPlayers = 10;
 				PhotonNetwork.CreateRoom(roomName, roomOptions, TypedLobby.Default);
@@ -55,34 +58,39 @@ function OnGUI() {
 		GUILayout.EndHorizontal();
 
 		// Join random room
-		GUILayout.BeginHorizontal();
-			GUILayout.Label("Join random: ", GUILayout.Width(75));
-			if(PhotonNetwork.GetRoomList().Length == 0) {
-				GUILayout.Label("No games available");
-			}
-			else {
-				GUILayout.Button("Go");
-			}
-		GUILayout.EndHorizontal();
+		// GUILayout.BeginHorizontal();
+		// 	GUILayout.Label("Join random: ", GUILayout.Width(75));
+		// 	if(PhotonNetwork.GetRoomList().Length == 0) {
+		// 		GUILayout.Label("No games available");
+		// 	}
+		// 	else {
+		// 		GUILayout.Button("Go");
+		// 	}
+		// GUILayout.EndHorizontal();
 
 		GUILayout.Space(30);
 
 		// Choose room
-		// GUILayout.BeginHorizontal();
+		GUILayout.BeginHorizontal();
 			GUILayout.Label("Join room:", GUILayout.Width(75));
-			if(PhotonNetwork.GetRoomList().Length == 0) {
-				GUILayout.Label("No games available");
-			}
-			else {
-				for(var game: RoomInfo in PhotonNetwork.GetRoomList()) {
-					GUILayout.BeginHorizontal();
-						GUILayout.Label(game.name + " " + game.playerCount + "/" + game.maxPlayers);
-						GUILayout.Button("Join");
-					GUILayout.EndHorizontal();
-				}
-			}
-		// GUILayout.EndHorizontal();
+			GUILayout.FlexibleSpace();
+			GUILayout.Button("Random", GUILayout.Width(60));
+		GUILayout.EndHorizontal();
 
+		scrollPos = GUILayout.BeginScrollView(scrollPos, GUILayout.Height(180), GUILayout.Width(300));
+		if(PhotonNetwork.GetRoomList().Length == 0) {
+			GUILayout.Label("No games available");
+		}
+		else {
+
+			for(var game: RoomInfo in PhotonNetwork.GetRoomList()) {
+				GUILayout.BeginHorizontal();
+					GUILayout.Label(game.name + " " + game.playerCount + "/" + game.maxPlayers);
+					GUILayout.Button("Join", GUILayout.Width(50));
+				GUILayout.EndHorizontal();
+			}
+			GUILayout.EndScrollView();
+		}
 
 	GUILayout.EndArea();
 }
