@@ -28,8 +28,3 @@ function Update() {
 	transform.position = Vector3.MoveTowards(transform.position, mousePos, moveSpeed);
 	transform.position.x = -7;
 }
-
-function OnDestroy() {
-	// Debug.Log("wtf?");
-	// Instantiate(Explosion, transform.position, Quaternion.identity);
-}
