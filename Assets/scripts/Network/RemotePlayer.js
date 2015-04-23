@@ -2,10 +2,10 @@
 
 var lerpSmoothing: float = 5f;
 var Explosion: GameObject;
-private var invincibleTime: float = 5f;
+var invincibleTime: float = 5f;
 private var photonView: PhotonView;
-private var networkPosition: Vector3;
-private var networkRotation: Quaternion;
+private var position: Vector3;
+private var rotation: Quaternion;
 
 function Start() {
 	photonView = GetComponent(PhotonView);
@@ -26,22 +26,26 @@ function OnPhotonSerializeView(stream: PhotonStream, info: PhotonMessageInfo) {
 		stream.SendNext(transform.rotation);
 	}
 	else {
-		networkPosition = stream.ReceiveNext();
-		networkRotation = stream.ReceiveNext();
+		position = stream.ReceiveNext();
+		rotation = stream.ReceiveNext();
 	}
 }
 
 function Update() {
 	if(!photonView.isMine) {
-		transform.position = Vector3.Lerp(transform.position, networkPosition, Time.deltaTime * lerpSmoothing);
-		transform.rotation = Quaternion.Lerp(transform.rotation, networkRotation, Time.deltaTime * lerpSmoothing);
+		transform.position = Vector3.Lerp(transform.position, position, Time.deltaTime * lerpSmoothing);
+		transform.rotation = Quaternion.Lerp(transform.rotation, rotation, Time.deltaTime * lerpSmoothing);
 	}
 }
 
 function OnTriggerEnter(other: Collider) {
 	if(other.tag == 'asteroid' && photonView.isMine && Time.time > invincibleTime) {
-		PhotonNetwork.Instantiate("Explosion", transform.position, Quaternion.identity, 0);
+		photonView.RPC("PlayerKilled", PhotonTargets.All, transform.position);
 		PhotonNetwork.Destroy(this.gameObject);
-		// Instantiate(Explosion, transform.position, Quaternion.identity);
 	}
+}
+
+@RPC
+function PlayerKilled(position: Vector3) {
+	Instantiate(Explosion, position, Quaternion.identity);
 }

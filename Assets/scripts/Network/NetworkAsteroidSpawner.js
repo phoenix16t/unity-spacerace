@@ -28,29 +28,19 @@ function OnPhotonSerializeView(stream: PhotonStream, info: PhotonMessageInfo) {
 	}
 }
 
-// function Update () {
-// 	if(PhotonNetwork.isMasterClient && photonView.isMine && Time.time > nextSpawn) {
-// 		nextSpawn = Time.time + spawnRate;
-// 		position = new Vector3(transform.position.x, Random.Range(-5f, 5f), transform.position.z);
-// 		rotation = Random.insideUnitSphere;
-// 		choice = Random.Range(0, asteroids.length);
-// 	}
-// 	else {
-// 		if(position != oldPos) {
-// 			var insAsteroid = Instantiate(asteroids[choice], position, Quaternion.identity);
-// 			insAsteroid.gameObject.rigidbody.AddForce(transform.right * -100);
-// 			insAsteroid.gameObject.rigidbody.AddTorque(rotation * 100);
-
-// 			oldPos = position;
-// 		}
-// 	}
-// }
-
 function Update() {
 	if(PhotonNetwork.isMasterClient && Time.time > nextSpawn) {
 		nextSpawn = Time.time + spawnRate;
 		position = new Vector3(transform.position.x, Random.Range(-5f, 5f), transform.position.z);
 		rotation = Random.insideUnitSphere;
 		choice = Random.Range(0, asteroids.length);
+	}
+
+	if(position != oldPos) {
+		var insAsteroid = Instantiate(asteroids[choice], position, Quaternion.identity);
+		insAsteroid.gameObject.rigidbody.AddForce(transform.right * -100);
+		insAsteroid.gameObject.rigidbody.AddTorque(rotation * 100);
+
+		oldPos = position;
 	}
 }

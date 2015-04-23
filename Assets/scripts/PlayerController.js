@@ -4,6 +4,7 @@ var moveSpeed: float;
 var topBoundary: float;
 var bottomBoundary: float;
 var Explosion: GameObject;
+var t: float = 0;
 private var distance: float;
 
 function Start() {
@@ -27,4 +28,8 @@ function Update() {
 	// move ship
 	transform.position = Vector3.MoveTowards(transform.position, mousePos, moveSpeed);
 	transform.position.x = -7;
+
+	// throw away - players coming in late to current round should watch
+	// t += Time.deltaTime / 5;
+	// gameObject.renderer.material.color = Color.Lerp(Color.green, Color.white, t);
 }
