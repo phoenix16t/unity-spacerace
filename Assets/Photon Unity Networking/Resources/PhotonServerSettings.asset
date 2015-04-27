@@ -37,4 +37,5 @@ MonoBehaviour:
   - SpawnAsteroid
   - killed
   - PlayerKilled
+  - Shoot
   DisableAutoOpenWizard: 0

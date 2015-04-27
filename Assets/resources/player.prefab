@@ -157,8 +157,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lerpSmoothing: 5
-  Explosion: {fileID: 175806, guid: a24f3913ade894ff683d42e2c210b638, type: 2}
   invincibleTime: 5
+  fireRate: .200000003
+  Laser: {fileID: 147332, guid: 5f0cefe7570f746a88681065dcad165b, type: 2}
+  Explosion: {fileID: 175806, guid: a24f3913ade894ff683d42e2c210b638, type: 2}
 --- !u!114 &11495990
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -198,8 +200,8 @@ MonoBehaviour:
   moveSpeed: .300000012
   topBoundary: 560
   bottomBoundary: 40
+  fireRate: 2
   Explosion: {fileID: 175806, guid: a24f3913ade894ff683d42e2c210b638, type: 2}
-  t: 0
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

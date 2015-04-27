@@ -1,11 +1,14 @@
 ﻿#pragma strict
 
 var lerpSmoothing: float = 5f;
-var Explosion: GameObject;
 var invincibleTime: float = 5f;
+var fireRate: float;
+var Laser: GameObject;
+var Explosion: GameObject;
 private var photonView: PhotonView;
 private var position: Vector3;
 private var rotation: Quaternion;
+private var nextShot: float;
 
 function Start() {
 	photonView = GetComponent(PhotonView);
@@ -36,6 +39,10 @@ function Update() {
 		transform.position = Vector3.Lerp(transform.position, position, Time.deltaTime * lerpSmoothing);
 		transform.rotation = Quaternion.Lerp(transform.rotation, rotation, Time.deltaTime * lerpSmoothing);
 	}
+	else if (Input.GetButton("Fire1") && Time.time > nextShot) {
+		photonView.RPC("Shoot", PhotonTargets.All, transform.position);
+		nextShot = Time.time + fireRate;
+	}
 }
 
 function OnTriggerEnter(other: Collider) {
@@ -48,4 +55,9 @@ function OnTriggerEnter(other: Collider) {
 @RPC
 function PlayerKilled(position: Vector3) {
 	Instantiate(Explosion, position, Quaternion.identity);
+}
+
+@RPC
+function Shoot(position: Vector3) {
+	Instantiate(Laser, transform.position, transform.rotation);
 }
