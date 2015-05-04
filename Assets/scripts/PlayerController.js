@@ -23,7 +23,7 @@ function Update() {
 	screenPos.x = 0;
 
 	// set rotation
-	transform.rotation.eulerAngles.z = Mathf.Atan2((screenPos.y - transform.position.y), (screenPos.x - transform.position.x)) * Mathf.Rad2Deg;
+	transform.rotation.eulerAngles.x = -Mathf.Atan2((screenPos.y - transform.position.y), (screenPos.x - transform.position.x)) * Mathf.Rad2Deg;
 
 	// move ship
 	transform.position = Vector3.MoveTowards(transform.position, screenPos, moveSpeed);

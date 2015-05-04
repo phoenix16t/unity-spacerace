@@ -1,8 +1,8 @@
 ﻿#pragma strict
 
 function OnJoinedRoom() {
-	var player = PhotonNetwork.Instantiate("player", Vector3.zero, Quaternion.identity, 0);
-	player.transform.Find("playerName").GetComponent.<TextMesh>().text = PhotonNetwork.playerName;
+	var player = PhotonNetwork.Instantiate("player", Vector3.zero, Quaternion.Euler(0,90,0), 0);
+	// player.transform.Find("playerName").GetComponent.<TextMesh>().text = PhotonNetwork.playerName;
 }
 
 function OnGUI() {
