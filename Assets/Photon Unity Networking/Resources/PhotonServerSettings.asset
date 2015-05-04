@@ -38,4 +38,5 @@ MonoBehaviour:
   - killed
   - PlayerKilled
   - Shoot
+  - EmitPlayerKilled
   DisableAutoOpenWizard: 0

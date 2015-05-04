@@ -29,6 +29,7 @@ GameObject:
   - 114: {fileID: 11451372}
   - 114: {fileID: 11451374}
   - 114: {fileID: 11451376}
+  - 114: {fileID: 11411678}
   m_Layer: 0
   m_Name: ship
   m_TagString: Player
@@ -204,6 +205,17 @@ TextMesh:
   m_Color:
     serializedVersion: 2
     rgba: 4294967295
+--- !u!114 &11411678
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 151378}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 209111515dce944a0bdfdebe424873b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &11451372
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -219,12 +231,12 @@ MonoBehaviour:
   group: 0
   prefixBackup: -1
   observed: {fileID: 0}
-  synchronization: 0
+  synchronization: 3
   onSerializeTransformOption: 3
   onSerializeRigidBodyOption: 2
   ownershipTransfer: 0
   ObservedComponents:
-  - {fileID: 0}
+  - {fileID: 11411678}
   ObservedComponentsFoldoutOpen: 1
   viewIdField: 0
   instantiationId: -1

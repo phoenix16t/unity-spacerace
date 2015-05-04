@@ -46,19 +46,16 @@ function Update() {
 	}
 }
 
-function OnTriggerEnter(other: Collider) {
-	if(other.tag == 'asteroid' && photonView.isMine && Time.time > invincibleTime) {
-		photonView.RPC("PlayerKilled", PhotonTargets.All, transform.position);
-		PhotonNetwork.Destroy(this.gameObject);
-	}
-}
-
 @RPC
-function PlayerKilled(shotSpawn: Transform) {
-	Instantiate(Explosion, shotSpawn.transform.position, shotSpawn.transform.rotation);
+function EmitPlayerKilled() {
+	Instantiate(Explosion, transform.position, Quaternion.identity);
 }
 
 @RPC
 function Shoot() {
 	Instantiate(Laser, shotSpawn.transform.position, shotSpawn.transform.rotation);
+}
+
+function PlayerKilled() {
+	photonView.RPC("EmitPlayerKilled", PhotonTargets.All);
 }
