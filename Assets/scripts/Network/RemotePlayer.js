@@ -12,15 +12,15 @@ private var rotation: Quaternion;
 private var nextShot: float;
 
 function Start() {
-	photonView = GetComponent(PhotonView);
+	photonView = GetComponent.<PhotonView>();
 	invincibleTime += Time.time;
 	
 	if(photonView.isMine) {
-		gameObject.name = "Me";
-		GetComponent(PlayerController).enabled = true;
+		gameObject.name = 'Me';
+		GetComponent.<PlayerController>().enabled = true;
 	}
 	else {
-		gameObject.name = "Network player";
+		gameObject.name = 'Network player';
 	}
 }
 
@@ -40,15 +40,15 @@ function Update() {
 		transform.position = Vector3.Lerp(transform.position, position, Time.deltaTime * lerpSmoothing);
 		transform.rotation = Quaternion.Lerp(transform.rotation, rotation, Time.deltaTime * lerpSmoothing);
 	}
-	else if (Input.GetButton("Fire1") && Time.time > nextShot) {
-		photonView.RPC("Shoot", PhotonTargets.All);
+	else if (Input.GetButton('Fire1') && Time.time > nextShot) {
+		photonView.RPC('Shoot', PhotonTargets.All, PhotonNetwork.player.ID);
 		nextShot = Time.time + fireRate;
 	}
 }
 
 function OnTriggerEnter(other: Collider) {
 	if(other.tag == 'asteroid' && photonView.isMine && Time.time > invincibleTime) {
-		photonView.RPC("PlayerKilled", PhotonTargets.All, transform.position);
+		photonView.RPC('PlayerKilled', PhotonTargets.All, transform.position);
 		PhotonNetwork.Destroy(this.gameObject);
 	}
 }
@@ -59,6 +59,14 @@ function PlayerKilled(shotSpawn: Transform) {
 }
 
 @RPC
-function Shoot() {
-	Instantiate(Laser, shotSpawn.transform.position, shotSpawn.transform.rotation);
+function Shoot(ownerId: int) {
+	var bolt = Instantiate(Laser, shotSpawn.transform.position, shotSpawn.transform.rotation);
+	bolt.GetComponent.<LaserController>().ownerId = ownerId;
 }
+
+
+
+
+
+
+

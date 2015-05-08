@@ -9,7 +9,6 @@ GameObject:
   m_Component:
   - 4: {fileID: 447330}
   - 33: {fileID: 3347332}
-  - 64: {fileID: 6447332}
   - 23: {fileID: 2347332}
   - 136: {fileID: 13647332}
   m_Layer: 0
@@ -29,9 +28,10 @@ GameObject:
   - 4: {fileID: 447332}
   - 114: {fileID: 11447332}
   - 114: {fileID: 11419118}
+  - 136: {fileID: 13645704}
   m_Layer: 0
   m_Name: Laser
-  m_TagString: Untagged
+  m_TagString: Laser
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -88,19 +88,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 147330}
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
---- !u!64 &6447332
-MeshCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 147330}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_SmoothSphereCollisions: 0
-  m_Convex: 0
-  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!114 &11419118
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -125,6 +112,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: .200000003
+  ownerId: 0
+--- !u!136 &13645704
+CapsuleCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 147332}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: .0500000007
+  m_Height: .600000024
+  m_Direction: 2
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!136 &13647332
 CapsuleCollider:
   m_ObjectHideFlags: 1
@@ -132,8 +133,8 @@ CapsuleCollider:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 147330}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
+  m_IsTrigger: 1
+  m_Enabled: 0
   m_Radius: .0500000007
   m_Height: .600000024
   m_Direction: 1
