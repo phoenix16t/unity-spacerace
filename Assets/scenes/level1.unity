@@ -816,7 +816,7 @@ GameObject:
   - 114: {fileID: 1742256841}
   m_Layer: 0
   m_Name: GameController
-  m_TagString: Untagged
+  m_TagString: GameController
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -855,6 +855,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4a39a7dc208649159e942c9dffe9dfe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  photonView: {fileID: 1742256841}
 --- !u!114 &1742256840
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -891,6 +892,7 @@ MonoBehaviour:
   ownershipTransfer: 0
   ObservedComponents:
   - {fileID: 1742256840}
+  - {fileID: 1742256839}
   ObservedComponentsFoldoutOpen: 1
   viewIdField: 1
   instantiationId: 1

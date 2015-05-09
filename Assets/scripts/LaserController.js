@@ -2,12 +2,36 @@
 
 var speed: float;
 var ownerId: int;
+var photonView: PhotonView;
+private var gameScript: NewGameController;
+
+function Start() {
+	gameScript = GameObject.FindWithTag("GameController").GetComponent.<NewGameController>();
+}
 
 function Update() {
-  transform.position += transform.forward * speed;
+	transform.position += transform.forward * speed;
 }
 
 function OnTriggerEnter(other: Collider) {
-  Debug.Log("Collider" + other);
-  Debug.Log("f");
+	// gameScript.Hit();
+
+// Debug.Log("id " + GetInstanceID() + " " + other.GetInstanceID());
+
+
+	if(other.tag == 'asteroid' && PhotonNetwork.isMasterClient) {
+		photonView.RPC('Hit', PhotonTargets.All, photonView.viewID);
+	}
+
+
+}
+
+@RPC
+function Hit(id: int) {
+	Debug.Log("hitted " + id);
+
+	if(photonView.viewID == id) {
+		// Destroy(other.gameObject);
+		Destroy(gameObject);
+	}
 }
