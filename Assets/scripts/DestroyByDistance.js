@@ -1,6 +1,6 @@
 ﻿#pragma strict
 
-var maxDistance: float = 50f;
+var maxDistance: float = 30f;
 private var distance: float;
 
 function Update() {

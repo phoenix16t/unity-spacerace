@@ -13,6 +13,8 @@ GameObject:
   - 64: {fileID: 6400000}
   - 54: {fileID: 5493620}
   - 114: {fileID: 11461356}
+  - 114: {fileID: 11434180}
+  - 114: {fileID: 11497942}
   m_Layer: 0
   m_Name: asteroid1
   m_TagString: asteroid
@@ -87,6 +89,31 @@ MeshCollider:
   m_SmoothSphereCollisions: 0
   m_Convex: 1
   m_Mesh: {fileID: 4300004, guid: b170a071d9c685343bdda95ed3bf48ef, type: 3}
+--- !u!114 &11434180
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ownerId: 0
+  group: 0
+  prefixBackup: -1
+  observed: {fileID: 0}
+  synchronization: 0
+  onSerializeTransformOption: 3
+  onSerializeRigidBodyOption: 2
+  ownershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 0}
+  ObservedComponentsFoldoutOpen: 1
+  viewIdField: 0
+  instantiationId: -1
+  isRuntimeInstantiated: 0
 --- !u!114 &11461356
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -98,6 +125,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9115659b04e9f4cd69bdc245a8d5b9fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &11497942
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5cc085fe7afa843f5b2eb4f488f6ca78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxDistance: 50
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

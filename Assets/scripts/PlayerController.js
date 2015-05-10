@@ -1,15 +1,19 @@
 ﻿#pragma strict
 
-var moveSpeed: float;
-var topBoundary: float;
-var bottomBoundary: float;
+var moveSpeed: float = 0.3f;
+var topBoundary: float = 560f;
+var bottomBoundary: float = 40f;
+var fireRate: float = 0.2f;
 var Explosion: GameObject;
 private var distance: float;
-private var mousePos : Vector2;
-private var screenPos : Vector3;
+private var mousePos: Vector2;
+private var screenPos: Vector3;
+private var nextShot: float;
+private var networkPlayer: NetworkPlayerController;
 
 function Start() {
 	distance = transform.position.z - camera.main.transform.position.z;
+	networkPlayer =	GetComponent.<NetworkPlayerController>();
 }
 
 function Update() {
@@ -28,4 +32,9 @@ function Update() {
 	// move ship
 	transform.position = Vector3.MoveTowards(transform.position, screenPos, moveSpeed);
 	transform.position.x = -7;
+
+	if(Input.GetButton('Fire1') && Time.time > nextShot) {
+		networkPlayer.Shoot();
+		nextShot = Time.time + fireRate;
+	}
 }

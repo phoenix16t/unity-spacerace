@@ -2,11 +2,10 @@
 
 var speed: float;
 var ownerId: int;
-var photonView: PhotonView;
-private var gameScript: NewGameController;
+private var photonView: PhotonView;
 
 function Start() {
-	gameScript = GameObject.FindWithTag("GameController").GetComponent.<NewGameController>();
+	photonView = GetComponent(PhotonView);
 }
 
 function Update() {
@@ -14,24 +13,15 @@ function Update() {
 }
 
 function OnTriggerEnter(other: Collider) {
-	// gameScript.Hit();
-
-// Debug.Log("id " + GetInstanceID() + " " + other.GetInstanceID());
-
-
 	if(other.tag == 'asteroid' && PhotonNetwork.isMasterClient) {
-		photonView.RPC('Hit', PhotonTargets.All, photonView.viewID);
+		other.GetComponent.<AsteroidController>().Hit();
+		photonView.RPC('Hit', PhotonTargets.AllViaServer, photonView.viewID);
 	}
-
-
 }
 
 @RPC
-function Hit(id: int) {
-	Debug.Log("hitted " + id);
-
-	if(photonView.viewID == id) {
-		// Destroy(other.gameObject);
+function Hit(laserId: int) {
+	if(photonView.viewID == laserId) {
 		Destroy(gameObject);
 	}
 }
