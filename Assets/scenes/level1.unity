@@ -503,6 +503,7 @@ MonoBehaviour:
   - {fileID: 100000, guid: e2abe2db222fa9c49a111c088001ebcf, type: 2}
   spawnRate: 2
   startTime: 7
+  uniqueId: 0
 --- !u!33 &869655633
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -537,12 +538,12 @@ MonoBehaviour:
   group: 0
   prefixBackup: -1
   observed: {fileID: 0}
-  synchronization: 3
+  synchronization: 0
   onSerializeTransformOption: 3
   onSerializeRigidBodyOption: 2
   ownershipTransfer: 0
   ObservedComponents:
-  - {fileID: 869655632}
+  - {fileID: 0}
   ObservedComponentsFoldoutOpen: 1
   viewIdField: 2
   instantiationId: 2
@@ -690,6 +691,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   photonView: {fileID: 1742256841}
+  score: 0
+  rank: 0
 --- !u!114 &1742256841
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -705,12 +708,12 @@ MonoBehaviour:
   group: 0
   prefixBackup: -1
   observed: {fileID: 0}
-  synchronization: 3
+  synchronization: 0
   onSerializeTransformOption: 3
   onSerializeRigidBodyOption: 2
   ownershipTransfer: 0
   ObservedComponents:
-  - {fileID: 1742256839}
+  - {fileID: 0}
   ObservedComponentsFoldoutOpen: 1
   viewIdField: 1
   instantiationId: 1

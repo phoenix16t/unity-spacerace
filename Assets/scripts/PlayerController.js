@@ -5,6 +5,9 @@ var topBoundary: float = 560f;
 var bottomBoundary: float = 40f;
 var fireRate: float = 0.2f;
 var Explosion: GameObject;
+
+var score: int = 0;
+
 private var distance: float;
 private var mousePos: Vector2;
 private var screenPos: Vector3;

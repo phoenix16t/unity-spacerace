@@ -3,6 +3,7 @@
 var asteroids: GameObject[];
 var spawnRate: float;
 var startTime: float;
+var uniqueId: int = 0;
 private var nextSpawn: float;
 private var photonView: PhotonView;
 private var oldPos: Vector3;
@@ -21,16 +22,17 @@ function Update() {
 		rotation = Random.insideUnitSphere;
 		asteroidType = Random.Range(0, asteroids.length);
 
-		var uniqueId = PhotonNetwork.AllocateViewID();
+		uniqueId++;
 		photonView.RPC('SpawnAsteroid', PhotonTargets.AllViaServer, position, rotation, asteroidType, uniqueId);
 		nextSpawn = Time.time + spawnRate;
 	}
 }
 
 @RPC
-function SpawnAsteroid(position: Vector3, rotation: Vector3, asteroidType: int, uniqueId: int) {
+function SpawnAsteroid(position: Vector3, rotation: Vector3, asteroidType: int, thisId: int) {
 	var asteroid = Instantiate(asteroids[asteroidType], position, Quaternion.identity);
 	asteroid.gameObject.rigidbody.AddForce(transform.right * -100);
 	asteroid.gameObject.rigidbody.AddTorque(rotation * 100);
-	asteroid.GetComponent.<PhotonView>().viewID = uniqueId;
+	asteroid.GetComponent.<AsteroidController>().asteroidId = thisId;
+	uniqueId = thisId;
 }

@@ -41,4 +41,5 @@ MonoBehaviour:
   - Hit
   - Destroyed
   - FireLaser
+  - asteroidHit
   DisableAutoOpenWizard: 0

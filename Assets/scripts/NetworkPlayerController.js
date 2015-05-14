@@ -5,6 +5,7 @@ var invincibleTime: float = 5f;
 var shotSpawn: GameObject;
 var Laser: GameObject;
 var Explosion: GameObject;
+var uniqueLaserId: int = 0;
 private var photonView: PhotonView;
 private var position: Vector3;
 private var rotation: Quaternion;
@@ -45,8 +46,9 @@ function OnTriggerEnter(other: Collider) {
 }
 
 function Shoot() {
-	var uniqueId = PhotonNetwork.AllocateViewID();
-	photonView.RPC('FireLaser', PhotonTargets.AllViaServer, PhotonNetwork.player.ID, uniqueId);
+	// var uniqueId = PhotonNetwork.AllocateViewID();
+	uniqueLaserId++;
+	photonView.RPC('FireLaser', PhotonTargets.AllViaServer, PhotonNetwork.player.ID, uniqueLaserId);
 }
 
 @RPC
@@ -60,6 +62,7 @@ function PlayerKilled(id: int, pos: Vector3) {
 @RPC
 function FireLaser(ownerId: int, uniqueId: int) {
 	var bolt = Instantiate(Laser, shotSpawn.transform.position, shotSpawn.transform.rotation);
-	bolt.GetComponent.<LaserController>().ownerId = ownerId;
-	bolt.GetComponent.<PhotonView>().viewID = uniqueId;
+	var boltScript = bolt.GetComponent.<LaserController>();
+	boltScript.ownerId = ownerId;
+	boltScript.laserId = uniqueId;
 }
