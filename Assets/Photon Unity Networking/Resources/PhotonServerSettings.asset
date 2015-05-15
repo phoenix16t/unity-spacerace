@@ -42,4 +42,6 @@ MonoBehaviour:
   - Destroyed
   - FireLaser
   - asteroidHit
+  - asteroidHitRPC
+  - newPlayer
   DisableAutoOpenWizard: 0

@@ -13,7 +13,7 @@ function Start() {
 function OnTriggerEnter(other: Collider) {
 	if(other.tag == 'Laser' && isAlive && PhotonNetwork.isMasterClient) {
 		var laser = other.GetComponent.<LaserController>();
-		gameController.GetComponent.<PhotonView>().RPC("asteroidHit", PhotonTargets.AllViaServer, asteroidId, laser.ownerId, laser.laserId);
+		gameController.GetComponent.<GameController>().asteroidHit(asteroidId, laser.laserId, laser.ownerId);
 		isAlive = false;
 	}
 }

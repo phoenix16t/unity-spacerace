@@ -466,7 +466,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!23 &869655631
 Renderer:
   m_ObjectHideFlags: 0
@@ -691,8 +691,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   photonView: {fileID: 1742256841}
-  score: 0
   rank: 0
+  startDelay: 5
+  AsteroidSpawner: {fileID: 869655630}
 --- !u!114 &1742256841
 MonoBehaviour:
   m_ObjectHideFlags: 0
