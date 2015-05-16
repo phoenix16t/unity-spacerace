@@ -692,7 +692,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   photonView: {fileID: 1742256841}
   rank: 0
-  startDelay: 5
+  startDelay: 10
   AsteroidSpawner: {fileID: 869655630}
 --- !u!114 &1742256841
 MonoBehaviour:

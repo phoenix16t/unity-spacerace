@@ -44,4 +44,7 @@ MonoBehaviour:
   - asteroidHit
   - asteroidHitRPC
   - newPlayer
+  - GetStartTime
+  - SetStartTime
+  - disTime
   DisableAutoOpenWizard: 0

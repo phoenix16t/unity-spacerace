@@ -3,12 +3,16 @@
 var photonView: PhotonView;
 var scores = new Array();
 var rank: int = 0;
-var startDelay: int = 10;
+var startDelay: float = 10;
 var AsteroidSpawner: GameObject;
 private var gameIsPlaying: boolean = false;
-private var startTime: int = 0;
+private var startTime: float = 0;
 private var startCountDown: boolean = false;
 private var timeLeft: float;
+
+private var ztimerStarted: boolean = false;
+// private var z-requestStartTime: boolean = false;
+
 
 // function OnJoinedRoom() {
 // 	var player = PhotonNetwork.Instantiate('player', Vector3.zero, Quaternion.Euler(0,90,0), 0);
@@ -31,24 +35,75 @@ function newPlayer(newId: int) {
 }
 
 function Update() {
-	if(startCountDown) {
-		if(startTime == 0) {
-			startTime = startDelay + Time.time;
+	// if(PhotonNetwork.isMasterClient) {
+	// 	Debug.Log("time " + PhotonNetwork.time);
+	// }
+	// else {
+	// 	photonView.RPC("disTime", PhotonTargets.All, PhotonNetwork.time);
+	// }
+
+
+
+
+
+	// if(startCountDown) {
+	// 	if(startTime == 0 && PhotonNetwork.isMasterClient) {
+	// 		startTime = startDelay + Time.time;
+	// 	}
+	// 	else if(startCountDown && timeLeft <= 0) {
+	// 		StartGame();
+	// 		startCountDown = false;
+	// 		startTime = 0;
+	// 		timeLeft = 0;
+	// 	}
+	// 	timeLeft = startTime - Time.time;
+	// }
+
+	if(!gameIsPlaying && PhotonNetwork.room) {
+		if(!ztimerStarted && PhotonNetwork.isMasterClient) {
+			startTime = startDelay + PhotonNetwork.time;
+			ztimerStarted = true;
+			// Debug.Log("startTime " + startTime);
 		}
-		else if(startCountDown && timeLeft <= 0) {
-			StartGame();
-			startCountDown = false;
-			startTime = 0;
-			timeLeft = 0;
+		else if(!ztimerStarted) {
+			photonView.RPC('GetStartTime', PhotonTargets.MasterClient);
+			ztimerStarted = true;
 		}
-		timeLeft = startTime - Time.time;
+
+		if(ztimerStarted && startTime > 0) {
+			if(startTime > PhotonNetwork.time) {
+				timeLeft = startTime - PhotonNetwork.time;
+			}
+			else if(startTime <= PhotonNetwork.time) {
+				gameIsPlaying = true;
+				ztimerStarted = false;
+				StartGame();
+			}
+		}
 	}
+}
+
+// @RPC
+// function disTime(temp: double) {
+// 	Debug.Log("dis " + temp);
+// }
+
+@RPC
+function GetStartTime() {
+	if(PhotonNetwork.isMasterClient) {
+		photonView.RPC('SetStartTime', PhotonTargets.AllViaServer, startTime);
+	}
+}
+
+@RPC
+function SetStartTime(newTime: float) {
+	Debug.Log("newTime " + newTime);
+	startTime = newTime;
 }
 
 function StartGame() {
 	var player = PhotonNetwork.Instantiate('player', Vector3.zero, Quaternion.Euler(0,90,0), 0);
 	AsteroidSpawner.SetActive(true);
-	gameIsPlaying = true;
 }
 
 function OnGUI() {
@@ -61,11 +116,19 @@ function OnGUI() {
 			GUILayout.FlexibleSpace();
 		GUILayout.EndHorizontal();
 
-		var allPlayers = new Array();
-		allPlayers = PhotonNetwork.playerList;
+		// var allPlayers = new Array();
+		// allPlayers = PhotonNetwork.playerList;
 
-		for(var thisPlayer in allPlayers.Sort()) {
-			GUILayout.BeginHorizontal(GUILayout.Width(300));
+		GUILayout.Space(30);
+
+		GUILayout.BeginHorizontal(GUILayout.Width(900));
+			GUILayout.FlexibleSpace();
+			GUILayout.Label("Players:");
+			GUILayout.FlexibleSpace();
+		GUILayout.EndHorizontal();
+
+		for(var thisPlayer in PhotonNetwork.playerList) {
+			GUILayout.BeginHorizontal(GUILayout.Width(900));
 				GUILayout.FlexibleSpace();
 				GUILayout.Label(thisPlayer.name);
 				GUILayout.FlexibleSpace();
