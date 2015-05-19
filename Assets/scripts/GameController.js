@@ -5,6 +5,9 @@ var scores = new Array();
 var rank: int = 0;
 var startDelay: float = 10;
 var AsteroidSpawner: GameObject;
+
+// var livingPlayers = new Array();
+
 private var gameIsPlaying: boolean = false;
 private var startTime: float = 0;
 private var startCountDown: boolean = false;
@@ -91,7 +94,7 @@ function Update() {
 @RPC
 function GetStartTime() {
 	if(PhotonNetwork.isMasterClient) {
-		photonView.RPC('SetStartTime', PhotonTargets.AllViaServer, startTime);
+		photonView.RPC('SetStartTime', PhotonTargets.All, startTime);
 	}
 }
 
@@ -102,6 +105,16 @@ function SetStartTime(newTime: float) {
 }
 
 function StartGame() {
+	// for(var thisPlayer in PhotonNetwork.playerList) {
+	// 	// livingPlayers[thisPlayer.ID] = true;
+	// 	// thisPlayer.SetCustomProperties
+	// }
+
+
+	var props = new ExitGames.Client.Photon.Hashtable();
+	props.Add("isAlive", true);
+	PhotonNetwork.player.SetCustomProperties(props);
+
 	var player = PhotonNetwork.Instantiate('player', Vector3.zero, Quaternion.Euler(0,90,0), 0);
 	AsteroidSpawner.SetActive(true);
 }
@@ -110,6 +123,8 @@ function OnGUI() {
 	if(!PhotonNetwork.room) { return; }
 
 	if(!gameIsPlaying) {
+		GUILayout.Space(50);
+
 		GUILayout.BeginHorizontal(GUILayout.Width(900));
 			GUILayout.FlexibleSpace();
 			GUILayout.Label('Next round starts in ' + timeLeft.ToString('F2') + ' seconds');
@@ -119,7 +134,8 @@ function OnGUI() {
 		// var allPlayers = new Array();
 		// allPlayers = PhotonNetwork.playerList;
 
-		GUILayout.Space(30);
+		
+		GUILayout.Space(100);
 
 		GUILayout.BeginHorizontal(GUILayout.Width(900));
 			GUILayout.FlexibleSpace();
@@ -146,6 +162,16 @@ function OnGUI() {
 				PhotonNetwork.LeaveRoom();
 			}
 		GUILayout.EndHorizontal();
+
+		if(Input.GetKeyDown('tab')) {
+			Debug.Log("lsdkfjsdlfjowiefjsjvlkxn,mbaelfj,mbsn,");
+			GUI.backgroundColor = Color.red;
+			GUI.color = Color.yellow;
+		}
+			GUILayout.BeginHorizontal(GUILayout.Width(900));
+				GUILayout.FlexibleSpace();
+				GUILayout.Label("sldkfjsdlkfj");
+			GUILayout.EndHorizontal();
 	}
 }
 

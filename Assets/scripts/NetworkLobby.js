@@ -23,6 +23,8 @@ function OnGUI() {
 	roomList = PhotonNetwork.GetRoomList();
 
 	GUILayout.BeginArea(new Rect(300, 0, 300, 600));
+		GUILayout.Space(50);
+
 		// Title
 		GUILayout.BeginHorizontal();
 			GUILayout.FlexibleSpace();
