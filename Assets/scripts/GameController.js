@@ -14,6 +14,14 @@ private var startCountDown: boolean = false;
 private var timeLeft: float;
 
 private var ztimerStarted: boolean = false;
+
+var color1 = new Color();
+var color2 = new Color();
+color1 = Color.yellow;
+color2 = Color.red;
+
+var myStyle: GUIStyle;
+var mySkin: GUISkin;
 // private var z-requestStartTime: boolean = false;
 
 
@@ -84,6 +92,18 @@ function Update() {
 			}
 		}
 	}
+
+	if(Input.GetKeyDown('tab')) {
+		color1 = Color.red;
+		color2 = Color.yellow;
+		myStyle.normal.textColor = Color.green;
+	}
+	else if(Input.GetKeyUp('tab')) {
+		color1 = Color.yellow;
+		color2 = Color.red;
+		myStyle.normal.textColor = Color.red;
+	}
+
 }
 
 // @RPC
@@ -163,15 +183,30 @@ function OnGUI() {
 			}
 		GUILayout.EndHorizontal();
 
-		if(Input.GetKeyDown('tab')) {
-			Debug.Log("lsdkfjsdlfjowiefjsjvlkxn,mbaelfj,mbsn,");
-			GUI.backgroundColor = Color.red;
-			GUI.color = Color.yellow;
-		}
-			GUILayout.BeginHorizontal(GUILayout.Width(900));
+		// if(Input.GetKeyDown('tab')) {
+		// 	Debug.Log("lsdkfjsdlfjowiefjsjvlkxn,mbaelfj,mbsn,");
+		// 	GUI.backgroundColor = Color.red;
+		// 	GUI.color = Color.yellow;
+		// }
+		// GUI.backgroundColor = color1;
+		// GUI.color = color2;
+
+		GUI.skin = mySkin;
+
+		GUILayout.BeginArea(new Rect(300, 100, 300, 400));
+			GUILayout.BeginHorizontal();
 				GUILayout.FlexibleSpace();
 				GUILayout.Label("sldkfjsdlkfj");
+				GUILayout.Button("Delete");
 			GUILayout.EndHorizontal();
+			GUILayout.BeginHorizontal();
+				GUILayout.FlexibleSpace();
+				GUILayout.Label("sldkfjsdlkfj");
+				GUILayout.Button("Delete");
+			GUILayout.EndHorizontal();
+		GUILayout.EndArea();
+
+		GUI.skin = null;
 	}
 }
 
