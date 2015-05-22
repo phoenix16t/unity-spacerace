@@ -6,8 +6,6 @@ var rank: int = 0;
 var startDelay: float = 10;
 var AsteroidSpawner: GameObject;
 
-// var livingPlayers = new Array();
-
 private var gameIsPlaying: boolean = false;
 private var startTime: float = 0;
 private var startCountDown: boolean = false;
@@ -15,66 +13,16 @@ private var timeLeft: float;
 
 private var ztimerStarted: boolean = false;
 
-var color1 = new Color();
-var color2 = new Color();
-color1 = Color.yellow;
-color2 = Color.red;
-
-var myStyle: GUIStyle;
 var mySkin: GUISkin;
-// private var z-requestStartTime: boolean = false;
+private var showRankings: boolean = false;
 
-
-// function OnJoinedRoom() {
-// 	var player = PhotonNetwork.Instantiate('player', Vector3.zero, Quaternion.Euler(0,90,0), 0);
-// 	Debug.Log("id " + photonView.viewID);
-// 	Debug.Log("id " + player.GetComponent.<PhotonView>());
-
-// 	// 	for(var thisPlayer in PhotonNetwork.playerList) {
-// 	// 	Debug.Log("id " + thisPlayer.ID);
-// 	// }
-
-
-
-// 	photonView.RPC('newPlayer', PhotonTargets.All, photonView.viewID);
-// }
-
-@RPC
-function newPlayer(newId: int) {
-	Debug.Log("newid " + newId);
-	scores[newId] = 0;
-}
+var props = new ExitGames.Client.Photon.Hashtable();
 
 function Update() {
-	// if(PhotonNetwork.isMasterClient) {
-	// 	Debug.Log("time " + PhotonNetwork.time);
-	// }
-	// else {
-	// 	photonView.RPC("disTime", PhotonTargets.All, PhotonNetwork.time);
-	// }
-
-
-
-
-
-	// if(startCountDown) {
-	// 	if(startTime == 0 && PhotonNetwork.isMasterClient) {
-	// 		startTime = startDelay + Time.time;
-	// 	}
-	// 	else if(startCountDown && timeLeft <= 0) {
-	// 		StartGame();
-	// 		startCountDown = false;
-	// 		startTime = 0;
-	// 		timeLeft = 0;
-	// 	}
-	// 	timeLeft = startTime - Time.time;
-	// }
-
 	if(!gameIsPlaying && PhotonNetwork.room) {
 		if(!ztimerStarted && PhotonNetwork.isMasterClient) {
 			startTime = startDelay + PhotonNetwork.time;
 			ztimerStarted = true;
-			// Debug.Log("startTime " + startTime);
 		}
 		else if(!ztimerStarted) {
 			photonView.RPC('GetStartTime', PhotonTargets.MasterClient);
@@ -94,22 +42,12 @@ function Update() {
 	}
 
 	if(Input.GetKeyDown('tab')) {
-		color1 = Color.red;
-		color2 = Color.yellow;
-		myStyle.normal.textColor = Color.green;
+		showRankings = true;
 	}
 	else if(Input.GetKeyUp('tab')) {
-		color1 = Color.yellow;
-		color2 = Color.red;
-		myStyle.normal.textColor = Color.red;
+		showRankings = false;
 	}
-
 }
-
-// @RPC
-// function disTime(temp: double) {
-// 	Debug.Log("dis " + temp);
-// }
 
 @RPC
 function GetStartTime() {
@@ -125,14 +63,8 @@ function SetStartTime(newTime: float) {
 }
 
 function StartGame() {
-	// for(var thisPlayer in PhotonNetwork.playerList) {
-	// 	// livingPlayers[thisPlayer.ID] = true;
-	// 	// thisPlayer.SetCustomProperties
-	// }
-
-
-	var props = new ExitGames.Client.Photon.Hashtable();
 	props.Add("isAlive", true);
+	props.Add("score", 0);
 	PhotonNetwork.player.SetCustomProperties(props);
 
 	var player = PhotonNetwork.Instantiate('player', Vector3.zero, Quaternion.Euler(0,90,0), 0);
@@ -151,10 +83,6 @@ function OnGUI() {
 			GUILayout.FlexibleSpace();
 		GUILayout.EndHorizontal();
 
-		// var allPlayers = new Array();
-		// allPlayers = PhotonNetwork.playerList;
-
-		
 		GUILayout.Space(100);
 
 		GUILayout.BeginHorizontal(GUILayout.Width(900));
@@ -176,37 +104,37 @@ function OnGUI() {
 	else {
 		GUILayout.BeginHorizontal(GUILayout.Width(900));
 			GUILayout.FlexibleSpace();
-			GUILayout.Label('Score: ' + scores, (GUILayout.Width(100)));
+			GUILayout.Label('Score: ' + PhotonNetwork.player.customProperties['score'], (GUILayout.Width(100)));
 			GUILayout.Label('Rank: ' + rank, GUILayout.Width(350));
 			if(GUILayout.Button('To Lobby')) {
 				PhotonNetwork.LeaveRoom();
 			}
 		GUILayout.EndHorizontal();
 
-		// if(Input.GetKeyDown('tab')) {
-		// 	Debug.Log("lsdkfjsdlfjowiefjsjvlkxn,mbaelfj,mbsn,");
-		// 	GUI.backgroundColor = Color.red;
-		// 	GUI.color = Color.yellow;
-		// }
-		// GUI.backgroundColor = color1;
-		// GUI.color = color2;
+		if(showRankings) {
+			GUI.skin = mySkin;
+				GUILayout.Window(0, Rect(300, 100, 300, 400), rankings, 'Rankings');
+			GUI.skin = null;
+		}
+	}
+}
 
-		GUI.skin = mySkin;
+function rankings(id: int) {
+	GUILayout.Space(30);
+	for(var thisPlayer in PhotonNetwork.playerList) {
+		GUILayout.BeginHorizontal(GUILayout.Width(300));
+			GUILayout.FlexibleSpace();
+			GUILayout.Label(thisPlayer.name + thisPlayer.customProperties['score']);
+			GUILayout.FlexibleSpace();
+		GUILayout.EndHorizontal();
+	}
 
-		GUILayout.BeginArea(new Rect(300, 100, 300, 400));
-			GUILayout.BeginHorizontal();
-				GUILayout.FlexibleSpace();
-				GUILayout.Label("sldkfjsdlkfj");
-				GUILayout.Button("Delete");
-			GUILayout.EndHorizontal();
-			GUILayout.BeginHorizontal();
-				GUILayout.FlexibleSpace();
-				GUILayout.Label("sldkfjsdlkfj");
-				GUILayout.Button("Delete");
-			GUILayout.EndHorizontal();
-		GUILayout.EndArea();
-
-		GUI.skin = null;
+	for(var thisPlayer in PhotonNetwork.playerList) {
+		GUILayout.BeginHorizontal(GUILayout.Width(300));
+			GUILayout.FlexibleSpace();
+			GUILayout.Label(thisPlayer.name + thisPlayer.customProperties['score']);
+			GUILayout.FlexibleSpace();
+		GUILayout.EndHorizontal();
 	}
 }
 
@@ -215,32 +143,22 @@ function OnLeftRoom() {
 }
 
 function asteroidHit(asteroidId: int, laserId: int, laserOwnerId: int) {
+	if(PhotonNetwork.isMasterClient) {
+		for(thisPlayer in PhotonNetwork.playerList) {
+			if(thisPlayer.ID == laserOwnerId) {
+				var scoreaaaa: int = thisPlayer.customProperties['score'];
+				scoreaaaa++;
+				props['score'] = scoreaaaa;
+				thisPlayer.SetCustomProperties(props);
+			}
+		}
 
-// Debug.Log("index " + laserOwnerId);
-// scores[laserOwnerId] = 1;
-// Debug.Log("score " + scores[laserOwnerId]);
-
-	var newScore: int;
-
-	if(!scores[laserOwnerId]) {
-		newScore = 0;
+		photonView.RPC('asteroidHitRPC', PhotonTargets.AllViaServer, asteroidId, laserId, laserOwnerId);
 	}
-	else if(scores[laserOwnerId]) {
-		newScore = scores[laserOwnerId];
-	}
-	else {
-		newScore = 0;
-	}
-	newScore++;
-
-	photonView.RPC('asteroidHitRPC', PhotonTargets.AllViaServer, asteroidId, laserId, laserOwnerId, newScore);
 }
 
 @RPC
-function asteroidHitRPC(asteroidId: int, laserId: int, laserOwnerId: int, newScore: int) {
-
-Debug.Log("new score " + newScore);
-
+function asteroidHitRPC(asteroidId: int, laserId: int, laserOwnerId: int) {
 	var asteroids = GameObject.FindGameObjectsWithTag('asteroid');
 	for(var asteroid in asteroids) {
 		if(asteroid.GetComponent.<AsteroidController>().asteroidId == asteroidId) {
@@ -255,15 +173,4 @@ Debug.Log("new score " + newScore);
 			Destroy(laser);
 		}
 	}
-
-	// var players = GameObject.FindGameObjectsWithTag('Player');
-	// for(var player in players) {
-	// 	var playerController = player.GetComponent.<PlayerController>();
-	// 	if(player.GetComponent.<PhotonView>().viewID == laserOwnerId) {
-	// 		// playerController.score
-	// 	}
-	// }
-
-	scores[laserOwnerId] = newScore;
-
 }
