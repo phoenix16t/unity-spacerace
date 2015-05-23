@@ -104,7 +104,7 @@ function OnGUI() {
 	else {
 		GUILayout.BeginHorizontal(GUILayout.Width(900));
 			GUILayout.FlexibleSpace();
-			GUILayout.Label('Score: ' + PhotonNetwork.player.customProperties['score'], (GUILayout.Width(100)));
+			GUILayout.Label('Score: ' + PhotonNetwork.player.customProperties['score'], GUILayout.Width(100));
 			GUILayout.Label('Rank: ' + rank, GUILayout.Width(350));
 			if(GUILayout.Button('To Lobby')) {
 				PhotonNetwork.LeaveRoom();
@@ -121,20 +121,33 @@ function OnGUI() {
 
 function rankings(id: int) {
 	GUILayout.Space(30);
+
+	var scoreList = new Array();
 	for(var thisPlayer in PhotonNetwork.playerList) {
-		GUILayout.BeginHorizontal(GUILayout.Width(300));
-			GUILayout.FlexibleSpace();
-			GUILayout.Label(thisPlayer.name + thisPlayer.customProperties['score']);
-			GUILayout.FlexibleSpace();
-		GUILayout.EndHorizontal();
+		var score: int = thisPlayer.customProperties['score'];
+		scoreList.push(score.ToString("D4") + "." + score + "." + thisPlayer.name);
 	}
 
-	for(var thisPlayer in PhotonNetwork.playerList) {
+	scoreList.Sort().Reverse();
+
+	var counter: int = 1;
+	for(var thisPlayer: String in scoreList) {
+		var playerInfo = thisPlayer.Split('.'[0]);
+
 		GUILayout.BeginHorizontal(GUILayout.Width(300));
 			GUILayout.FlexibleSpace();
-			GUILayout.Label(thisPlayer.name + thisPlayer.customProperties['score']);
-			GUILayout.FlexibleSpace();
+			GUILayout.Label(counter + ": " + playerInfo[2], GUILayout.Width(100));
+			GUILayout.Label(playerInfo[1], GUILayout.Width(100));
 		GUILayout.EndHorizontal();
+
+		counter++;
+
+// 		GUILayout.BeginHorizontal(GUILayout.Width(300));
+		// 	GUILayout.FlexibleSpace();
+		// 	// GUILayout.Label(i + ":", GUILayout.Width(100));
+		// 	GUILayout.Label(i + ":" + playerInfo[2], GUILayout.Width(100));
+		// 	GUILayout.Label(playerInfo[1], GUILayout.Width(100));
+		// GUILayout.EndHorizontal();
 	}
 }
 

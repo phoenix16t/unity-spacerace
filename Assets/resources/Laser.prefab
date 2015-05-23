@@ -99,7 +99,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5cc085fe7afa843f5b2eb4f488f6ca78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxDistance: 50
+  maxDistance: 20
 --- !u!114 &11447332
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -112,8 +112,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: .200000003
+  laserId: 0
   ownerId: 0
-  photonView: {fileID: 11477140}
 --- !u!114 &11477140
 MonoBehaviour:
   m_ObjectHideFlags: 1
