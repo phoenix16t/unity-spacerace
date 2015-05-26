@@ -133,10 +133,14 @@ function rankings(id: int) {
 	var counter: int = 1;
 	for(var thisPlayer: String in scoreList) {
 		var playerInfo = thisPlayer.Split('.'[0]);
+		var rankSuffix = ['st','nd','rd'];
+		var rankText: String;
+
+		rankText = counter <= rankSuffix.length ? counter + rankSuffix[counter-1] : counter.ToString();
 
 		GUILayout.BeginHorizontal(GUILayout.Width(300));
 			GUILayout.FlexibleSpace();
-			GUILayout.Label(counter + ": " + playerInfo[2], GUILayout.Width(100));
+			GUILayout.Label(rankText + ": " + playerInfo[2], GUILayout.Width(100));
 			GUILayout.Label(playerInfo[1], GUILayout.Width(100));
 		GUILayout.EndHorizontal();
 

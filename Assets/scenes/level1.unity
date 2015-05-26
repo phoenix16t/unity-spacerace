@@ -692,9 +692,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   photonView: {fileID: 1742256841}
   rank: 0
-  startDelay: 1
+  startDelay: 0
   AsteroidSpawner: {fileID: 869655630}
-  mySkin: {fileID: 11400000, guid: 48e984719568a41379f540689147bd02, type: 2}
+  mySkin: {fileID: 11400000, guid: 9c83bb486b7754d34937ffc973cfe008, type: 2}
 --- !u!114 &1742256841
 MonoBehaviour:
   m_ObjectHideFlags: 0
