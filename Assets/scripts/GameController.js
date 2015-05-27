@@ -18,6 +18,10 @@ private var showRankings: boolean = false;
 
 var props = new ExitGames.Client.Photon.Hashtable();
 
+
+//////////////////////////////////////////////////
+///// Game logic
+//////////////////////////////////////////////////
 function Update() {
 	if(!gameIsPlaying && PhotonNetwork.room) {
 		if(!ztimerStarted && PhotonNetwork.isMasterClient) {
@@ -58,19 +62,23 @@ function GetStartTime() {
 
 @RPC
 function SetStartTime(newTime: float) {
-	Debug.Log("newTime " + newTime);
+	Debug.Log('newTime ' + newTime);
 	startTime = newTime;
 }
 
 function StartGame() {
-	props.Add("isAlive", true);
-	props.Add("score", 0);
+	props.Add('isAlive', true);
+	props.Add('score', 0);
 	PhotonNetwork.player.SetCustomProperties(props);
 
 	var player = PhotonNetwork.Instantiate('player', Vector3.zero, Quaternion.Euler(0,90,0), 0);
 	AsteroidSpawner.SetActive(true);
 }
 
+
+//////////////////////////////////////////////////
+///// GUI
+//////////////////////////////////////////////////
 function OnGUI() {
 	if(!PhotonNetwork.room) { return; }
 
@@ -87,7 +95,7 @@ function OnGUI() {
 
 		GUILayout.BeginHorizontal(GUILayout.Width(900));
 			GUILayout.FlexibleSpace();
-			GUILayout.Label("Players:");
+			GUILayout.Label('Players:');
 			GUILayout.FlexibleSpace();
 		GUILayout.EndHorizontal();
 
@@ -113,47 +121,48 @@ function OnGUI() {
 
 		if(showRankings) {
 			GUI.skin = mySkin;
-				GUILayout.Window(0, Rect(300, 100, 300, 400), rankings, 'Rankings');
+				GUILayout.Window(0, Rect(300, 100, 300, 400), displayRankings, 'Rankings');
 			GUI.skin = null;
 		}
 	}
 }
 
-function rankings(id: int) {
+function displayRankings(id: int) {
 	GUILayout.Space(30);
 
 	var scoreList = new Array();
 	for(var thisPlayer in PhotonNetwork.playerList) {
 		var score: int = thisPlayer.customProperties['score'];
-		scoreList.push(score.ToString("D4") + "." + score + "." + thisPlayer.name);
+		scoreList.push(score.ToString('D4') + '.' + score + '.' + thisPlayer.name);
 	}
 
 	scoreList.Sort().Reverse();
+
+	GUILayout.BeginHorizontal(GUILayout.Width(300));
+		GUILayout.FlexibleSpace();
+		GUILayout.Label('Rank', GUILayout.Width(50));
+		GUILayout.Label('Name', GUILayout.Width(100));
+		GUILayout.Label('Kills', GUILayout.Width(75));
+	GUILayout.EndHorizontal();
 
 	var counter: int = 1;
 	for(var thisPlayer: String in scoreList) {
 		var playerInfo = thisPlayer.Split('.'[0]);
 		var rankSuffix = ['st','nd','rd'];
-		var rankText: String;
 
-		rankText = counter <= rankSuffix.length ? counter + rankSuffix[counter-1] : counter.ToString();
+		var rankText = counter <= rankSuffix.length ? counter + rankSuffix[counter-1] : counter.ToString();
 
 		GUILayout.BeginHorizontal(GUILayout.Width(300));
 			GUILayout.FlexibleSpace();
-			GUILayout.Label(rankText + ": " + playerInfo[2], GUILayout.Width(100));
-			GUILayout.Label(playerInfo[1], GUILayout.Width(100));
+			GUILayout.Label(rankText + ': ', GUILayout.Width(50));
+			GUILayout.Label(playerInfo[2], GUILayout.Width(100));
+			GUILayout.Label(playerInfo[1], GUILayout.Width(75));
 		GUILayout.EndHorizontal();
 
 		counter++;
-
-// 		GUILayout.BeginHorizontal(GUILayout.Width(300));
-		// 	GUILayout.FlexibleSpace();
-		// 	// GUILayout.Label(i + ":", GUILayout.Width(100));
-		// 	GUILayout.Label(i + ":" + playerInfo[2], GUILayout.Width(100));
-		// 	GUILayout.Label(playerInfo[1], GUILayout.Width(100));
-		// GUILayout.EndHorizontal();
 	}
 }
+
 
 function OnLeftRoom() {
 	Application.LoadLevel(Application.loadedLevel);

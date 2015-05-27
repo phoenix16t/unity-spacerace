@@ -39,11 +39,11 @@ function Update() {
 	}
 }
 
-// function OnTriggerEnter(other: Collider) {
-// 	if(other.tag == 'asteroid' && PhotonNetwork.isMasterClient && Time.time > invincibleTime) {
-// 		photonView.RPC('PlayerKilled', PhotonTargets.All, photonView.viewID, transform.position);
-// 	}
-// }
+function OnTriggerEnter(other: Collider) {
+	if(other.tag == 'asteroid' && PhotonNetwork.isMasterClient && Time.time > invincibleTime) {
+		photonView.RPC('PlayerKilled', PhotonTargets.All, photonView.viewID, transform.position);
+	}
+}
 
 function Shoot() {
 	// var uniqueId = PhotonNetwork.AllocateViewID();
@@ -51,13 +51,13 @@ function Shoot() {
 	photonView.RPC('FireLaser', PhotonTargets.AllViaServer, PhotonNetwork.player.ID, uniqueLaserId);
 }
 
-// @RPC
-// function PlayerKilled(id: int, pos: Vector3) {
-// 	Instantiate(Explosion, pos, Quaternion.identity);
-// 	if(photonView.viewID == id && photonView.isMine) {
-// 		PhotonNetwork.Destroy(this.gameObject);
-// 	}
-// }
+@RPC
+function PlayerKilled(id: int, pos: Vector3) {
+	Instantiate(Explosion, pos, Quaternion.identity);
+	if(photonView.viewID == id && photonView.isMine) {
+		PhotonNetwork.Destroy(this.gameObject);
+	}
+}
 
 @RPC
 function FireLaser(ownerId: int, uniqueId: int) {
