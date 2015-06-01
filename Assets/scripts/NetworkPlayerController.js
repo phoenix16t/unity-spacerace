@@ -55,6 +55,9 @@ function Shoot() {
 function PlayerKilled(id: int, pos: Vector3) {
 	Instantiate(Explosion, pos, Quaternion.identity);
 	if(photonView.viewID == id && photonView.isMine) {
+		var props = new ExitGames.Client.Photon.Hashtable();
+		props['isAlive'] = false;
+		PhotonNetwork.player.SetCustomProperties(props);
 		PhotonNetwork.Destroy(this.gameObject);
 	}
 }
